@@ -15,7 +15,7 @@ type Player struct {
 }
 
 type PlayerStore interface {
-	GetPlayerStore(name string) int
+	GetPlayerScore(name string) int
 	RecordWin(name string)
 	GetLeague() League
 }
@@ -57,7 +57,7 @@ func (p *PlayerServer) playersHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (p *PlayerServer) showScore(w http.ResponseWriter, player string) {
-	score := p.store.GetPlayerStore(player)
+	score := p.store.GetPlayerScore(player)
 
 	if score == 0 {
 		w.WriteHeader(http.StatusNotFound)

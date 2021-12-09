@@ -16,7 +16,7 @@ type StubPlayerStore struct {
 	league   []Player
 }
 
-func (s *StubPlayerStore) GetPlayerStore(name string) int {
+func (s *StubPlayerStore) GetPlayerScore(name string) int {
 	score := s.scores[name]
 
 	return score
@@ -24,6 +24,10 @@ func (s *StubPlayerStore) GetPlayerStore(name string) int {
 
 func (s *StubPlayerStore) RecordWin(name string) {
 	s.winCalls = append(s.winCalls, name)
+}
+
+func (s *StubPlayerStore) GetLeague() League {
+	return s.league
 }
 
 func TestGETPlayers(t *testing.T) {
@@ -177,10 +181,6 @@ func newPostWinRequest(name string) *http.Request {
 	req, _ := http.NewRequest(http.MethodPost, fmt.Sprintf("/players/%s", name), nil)
 
 	return req
-}
-
-func (s *StubPlayerStore) GetLeague() []Player {
-	return s.league
 }
 
 func getLeagueFromResponse(t testing.TB, body io.Reader) (league []Player) {
